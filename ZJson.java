@@ -5,8 +5,9 @@
 // $Id$
 //
 
+/*
 package ru.mave.ConcepTIS.dao; //package org.EustroSoft.ZJson;
-
+*/
 import java.util.*;
 import java.io.*;
 
@@ -372,10 +373,9 @@ public ZJson(String json) throws IOException { this(ZJSON_TYPE_PARSER); this.par
 // DEBUGGING METHODS SECTION
 private static Writer debug = null;
 public static void setDebug(Writer debug_writer) { debug = debug_writer; }
-private static void dodebug(String msg){ if (debug==null) return; try{ debug.write(msg); debug.write("\n"); debug.flush(); }catch(Exception e){} }
-
-
-public static void main(String[] args)
+private static void dodebug(String msg){ if (debug==null) return; try{ debug.write(msg); debug.write("\n"); debug.flush(); }catch(Exception e){} 
+}
+public static void go()  
 throws IOException
 {
 ZJson json = new ZJson();
@@ -396,7 +396,5 @@ json.writeJSONString(out_writer,1);
 System.out.println("");
 if(ioe != null) {System.out.println(ioe);}
 else System.out.println("Ok!");
-
-}
-
+  }
 } //ZJson

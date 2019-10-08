@@ -13,6 +13,6 @@ clean:
 	@echo "Cleaning project..." 
 	@rm -f *.class
 	@echo "Ok"
-all:
-        clean build run
+
+
 

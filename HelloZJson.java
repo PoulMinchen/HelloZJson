@@ -7,8 +7,20 @@
  * (c) 2019 Pavel Seleznev <yadzuka@eustrosoft.org>
  *
  */
-
 import java.util.*;
 class HelloZJson{
- public static void main(String []args){System.out.println("Hello ZJson!");}
+
+public static void main(String []args)
+ 
+ {
+try{
+System.out.println("Hello ZJsno!");
+ZJson.go();
+}
+catch(Exception ex)
+{
+  System.out.println("File does not found");
+}
+  }
+
 }
