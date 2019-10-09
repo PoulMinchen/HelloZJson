@@ -21,7 +21,7 @@ public class ZJson
 
 private int type = ZJSON_TYPE_OBJECT; // ZJSON_TYPE_OBJECT,  ZJSON_TYPE_ARRAY, ZJSON_TYPE_PARSER?
 private int print_mode = ZJSON_PRINT_MODE_COLUMN; // ZJSON_PRINT_MODE_ROW, ZJSON_PRINT_MODE_COLUMN
-private  Vector names;
+private Vector names;
 private Vector items; 
 //private Object[] items; // [[String name,Object value, int type],...] ?
 //private ht_index
@@ -375,7 +375,7 @@ private static Writer debug = null;
 public static void setDebug(Writer debug_writer) { debug = debug_writer; }
 private static void dodebug(String msg){ if (debug==null) return; try{ debug.write(msg); debug.write("\n"); debug.flush(); }catch(Exception e){} 
 }
-public static void go()  
+public static void startExecuting()  
 throws IOException
 {
 ZJson json = new ZJson();

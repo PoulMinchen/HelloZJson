@@ -8,19 +8,28 @@
  *
  */
 import java.util.*;
+import java.io.*;
+
 class HelloZJson{
 
-public static void main(String []args)
- 
- {
-try{
-System.out.println("Hello ZJsno!");
-ZJson.go();
-}
-catch(Exception ex)
-{
-  System.out.println("File does not found");
-}
+public static void main(String []args){
+	try{
+	System.out.println("Hello ZJson!");
+	ZJson zjson = new ZJson();
+	//ZJson.startExecuting(); 
+	StartingTests(zjson);}
+	catch(Exception ex){
+	System.out.println("File does not found");}
+	finally{}
   }
-
+public static void StartingTests(ZJson json){
+try{
+  System.out.println("Starting tests method!");
+  ZJson zjs = json;
+  ZJsonTests testingZJson = new ZJsonTests();
+  testingZJson.ZJsonInitializationTesting(zjs);
+  testingZJson.ZJsonAddingObjectsTest();
+}
+catch(Exception ex){System.out.println(ex);}
+ }
 }
