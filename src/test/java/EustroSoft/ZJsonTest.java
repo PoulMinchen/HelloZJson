@@ -7,24 +7,24 @@ import static org.junit.Assert.*;
 
 public class ZJsonTest {
 
-    @Test
-    public void clear() {
-    }
+    ZJson zjson;
 
-    @Test
-    public void size() {
-    }
+    public static final String TESTING_OBJECT = new String("Hello!");
+    public static final String TESTING_STRING = new String("String");
 
-    @Test
-    public void addItem() {
-    }
-
-    @Test
-    public void testAddItem() {
+    public ZJsonTest()
+    {
+        zjson = new ZJson();
     }
 
     @Test
     public void setItem() {
+
+        zjson.addItem(TESTING_OBJECT,TESTING_STRING);
+
+        zjson.setItem(TESTING_STRING,TESTING_OBJECT);
+
+        assert (zjson.getItem(TESTING_STRING) != null);
     }
 
     @Test
