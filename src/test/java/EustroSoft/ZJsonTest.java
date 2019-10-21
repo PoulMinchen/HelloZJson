@@ -13,8 +13,6 @@ public class ZJsonTest {
     private ZJson zjson;
     private ZJson zjsonTwo;
 
-    private int stringCounter;
-    private int errorString;
     private String [] rightJSONStrings;
     private String [] wrongJSONStrings;
 
@@ -22,9 +20,6 @@ public class ZJsonTest {
     {
         zjson = new ZJson();
         zjsonTwo = new ZJson();
-
-        stringCounter = 1;
-        errorString=0;
     }
 
     @Test
@@ -115,6 +110,9 @@ public class ZJsonTest {
     public void parseJSONReaderRight() throws IOException {
         StringReader jsonReader;
         int endCode = 0;
+        int stringCounter = 1;
+        int errorString = 0;
+
         //Right string for parsing
         rightJSONStrings = new String[]{
                 "{\"name\": \"\\u0123\"}",
@@ -153,6 +151,8 @@ public class ZJsonTest {
     public void parseJSONReaderWrong() throws IOException {
         StringReader jsonReader;
         int endCode = 0;
+        int stringCounter = 1;
+        int errorString = 0;
         // Wrong strings for parsing
         wrongJSONStrings = new String[]{
                 "{\"name\": \"\\u90xx\"}",
@@ -230,7 +230,6 @@ public class ZJsonTest {
         assertEquals(j, testingObjects[3]);
         assertEquals(d, testingObjects[4]);
         assertEquals(d1, testingObjects[5]);
-
     }
 
     @Test
