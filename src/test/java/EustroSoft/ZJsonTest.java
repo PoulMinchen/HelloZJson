@@ -100,7 +100,7 @@ public class ZJsonTest {
 
         assertTrue(zjson.getItemName(0)!="exception");
     }
-    
+
     /**
      * There are right JSON format strings
      * All of them need to be parsed
@@ -123,7 +123,9 @@ public class ZJsonTest {
                 "{\"name\": true }",
                 "{\"name\": \"1231\" }",
                 "{\"name\": [\"Hello\",true,false,123 ]}",
-                "{\"name\" : [\"name\" : [true,false,12]  123 , true]}"
+                "{\"name\" : [\"name\" : [true,false,12]  123 , true]}",
+                "{\"name\" : [\"name\" : [true,false,12]]}",
+
         };
 
         for(String testingString : rightJSONStrings) {
