@@ -100,6 +100,7 @@ public class ZJsonTest {
 
         assertTrue(zjson.getItemName(0)!="exception");
     }
+    
     /**
      * There are right JSON format strings
      * All of them need to be parsed
@@ -121,7 +122,8 @@ public class ZJsonTest {
                 "{\"name\": \"true\"}",
                 "{\"name\": true }",
                 "{\"name\": \"1231\" }",
-                "{\"name\": [\"Hello\",true,false,123 ]}"
+                "{\"name\": [\"Hello\",true,false,123 ]}",
+                "{\"name\" : [\"name\" : [true,false,12]  123 , true]}"
         };
 
         for(String testingString : rightJSONStrings) {
@@ -160,6 +162,9 @@ public class ZJsonTest {
                 "{\"name\": tru }",
                 "{[\"name\": \"a\"]}",
                 "{\"name\": true ",
+                "{ name : \"true\"}",
+                "{\"name\" true}",
+                "{\"name\" : [\"name\":[\"gloomy\",\"ear\"]]}",
                 "{\"name\": [\"Hello\",{true},false,123 ]}"
         };
 
@@ -234,14 +239,14 @@ public class ZJsonTest {
 
     @Test
     public void setType() {
-        zjson.setType(111);
+        zjson.setType(1);
 
         assertTrue(zjson.getType()>=0 && zjson.getType()<=4 );
     }
 
     @Test
     public void setPrintMode() {
-        zjson.setPrintMode(20);
+        zjson.setPrintMode(0);
 
         assertTrue(zjson.getPrintMode()>=0 && zjson.getPrintMode()<=1 );
     }
