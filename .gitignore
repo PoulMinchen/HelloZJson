@@ -1,1 +1,7 @@
 *.class
+<<<<<<< HEAD
+=======
+/.idea
+*.iml
+/target
+>>>>>>> origin/ZJson-Maven
