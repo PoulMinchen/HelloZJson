@@ -12,6 +12,7 @@ package EustroSoft;
 
 import java.util.*;
 import java.io.*;
+import java.net.*;
 
 class HelloZJson {
 
@@ -19,8 +20,6 @@ class HelloZJson {
         try {
             System.out.println("Hello ZJson!");
             ZJson zjson = new ZJson();
-
-
         } catch (Exception ex) {
             System.out.println("File does not found");
         } finally {
