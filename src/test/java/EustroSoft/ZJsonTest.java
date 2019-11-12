@@ -2,6 +2,9 @@ package EustroSoft;
 
 import java.util.*;
 import java.io.*;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.nio.*;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -101,47 +104,6 @@ public class ZJsonTest {
 		assertTrue(zjson.getItemName(0) != "exception");
 	}
 
-	@Test
-	public void parseRightJSONReaderFromFiles() throws IOException {
-		IOException ex = null;
-		/*9Path pathToRightJSONS = Paths.get(
-				"/home/yadzuka/workspace/ConcepTISProjects/HelloZJson/Resources/WrongJSONS/SignatureForWrongJSONS.txt");
-		Path newPath = FileSystems.getDefault().getPath
-				("\\Resources\\WrongJSONS\\SignatureForWrongJSONS.txt");
-		System.out.println(Files.isReadable(newPath));
-
-		/*
-		 * int buffer = 0; System.out.println(pathToRightJSONS.toUri()); FileReader
-		 * reader = new FileReader(pathToRightJSONS.toFile()); PrintWriter writer = new
-		 * PrintWriter(pathToRightJSONS.toFile()); BufferedWriter writerB = new
-		 * BufferedWriter(writer); while(reader.ready()) { buffer = reader.read();
-		 * writerB.append((char)buffer); } System.out.println(writer.toString());
-		 * System.out.println(writerB.toString());
-		 */
-		System.out.println("RightJSONS test starts next!");
-		
-		BufferedReader reader = new BufferedReader(new FileReader
-				("/home/yadzuka/workspace/ConcepTISProjects/HelloZJson/Resources/RightJSONS/SignatureForRightJSONS"));
-		String lineContent;
-		StringBuilder builder = new StringBuilder();
-		while((lineContent = reader.readLine())!= null) {
-			System.out.println(lineContent);
-			builder.append(lineContent);
-			
-		}
-		lineContent = null;
-		zjson.parseJSONString(builder.toString());
-		System.out.println(zjson.toString());
-		reader.close();
-
-	}
-
-	/**
-	 * There are right JSON format strings All of them need to be parsed Also with
-	 * no any error
-	 * 
-	 * @throws IOException
-	 */
 	/*
 	 * @Test public void parseJSONReaderRight() throws IOException { StringReader
 	 * jsonReader; int endCode = 0; int stringCounter = 1; int errorString = 0;
@@ -165,25 +127,19 @@ public class ZJsonTest {
 	 * System.out.println("How many strings have not been passed : " + errorString);
 	 * assertTrue(errorString==0); }
 	 */
-	@Test
-	public void parseWrongJSONReaderFromFiles() throws IOException {
-		IOException ex = null;
-		System.out.println("Wrong JSONS test starts next!");
-		BufferedReader reader = new BufferedReader(new FileReader
-				("/home/yadzuka/workspace/ConcepTISProjects/HelloZJson/Resources/WrongJSONS/SignatureForWrongJSONS"));
-		String buffer;
-		while((buffer = reader.readLine())!=null) {
-			System.out.println(buffer);
-		}
-		reader.close();
-	}
-
-	/**
-	 * There are wrong JSON format strings All of them not need to be parsed
+	/*
+	 * @Test public void parseWrongJSONReaderFromFiles() throws IOException {
+	 * IOException ex = null; System.out.println("Wrong JSONS test starts next!");
+	 * BufferedReader reader = new BufferedReader(new FileReader
+	 * ("/home/yadzuka/workspace/ConcepTISProjects/HelloZJson/Resources/WrongJSONS/SignatureForWrongJSONS"
+	 * )); String buffer; StringBuffer builder = new StringBuffer(); while((buffer =
+	 * reader.readLine())!=null) { builder.append(buffer); } reader.close(); }
+	 * 
+	 * /* There are wrong JSON format strings All of them not need to be parsed
 	 * 
 	 * @throws IOException
-	 */
-	/*
+	 *
+	 *
 	 * @Test public void parseJSONReaderWrong() throws IOException { StringReader
 	 * jsonReader; int endCode = 0; int stringCounter = 1; int errorString = 0; //
 	 * Wrong strings for parsing wrongJSONStrings = new String[]{
@@ -253,13 +209,46 @@ public class ZJsonTest {
 
 		assertTrue(zjson.getPrintMode() >= 0 && zjson.getPrintMode() <= 1);
 	}
-
+	
 	@Test
 	public void parsingRightJsons() throws IOException {
+
+		String buffer;
+		StringBuilder strBuilder = new StringBuilder();
+
+		File bufferForCreateTests = new File("Resources/RightJSONS");
 		File configureFile = new File("Resources/RightJSONS/SignatureForRightJSONS");
-		if (configureFile.exists())
-			System.out.println("Configure file exists");
-		try (FileReader reader = new FileReader(configureFile)) {
+		BufferedReader reader = new BufferedReader(new FileReader(configureFile.getAbsolutePath()));
+
+		try {
+			if (configureFile.exists())
+				while ((buffer = reader.readLine()) != null) {
+					strBuilder.append(buffer);
+				}
+			zjson = new ZJson(strBuilder.toString());
+			strBuilder = null;
+			ZJson forFilePaths = new ZJson(zjson.getItem(2).toString());
+
+			for (int j = 0; j < forFilePaths.size(); j++) {
+				System.out.println(forFilePaths.getItem(j));
+
+				if (!new File(bufferForCreateTests.toString() + "/"
+						+ new ZJson(forFilePaths.getItem(j).toString()).getItem(0)).exists()) {
+					File f = new File(bufferForCreateTests.toString() + "/"
+							+ new ZJson(forFilePaths.getItem(j).toString()).getItem(0));
+					System.out.println(f);
+					Files.createFile(f.toPath());
+					
+					try(FileWriter fw = new FileWriter(f)){
+						fw.append("{\n \"comment\" : \"Пустой комментарий\",\n \"Result\" : \"Тест не проведен\", \n}");
+						fw.flush();
+					}catch(Exception ex) {
+						System.out.println(ex.getMessage());
+					}
+				}	
+			}
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
 		}
 	}
 
