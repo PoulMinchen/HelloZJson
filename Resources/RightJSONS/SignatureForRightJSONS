@@ -1,6 +1,6 @@
 {
  "comment" : "Right JSON tests",
- "runonlytest" : ["R1","R2"],
+ "runonlytest" : ["R1","R2","R3"],
  "tests" : [
   {
    "file" : "R1",

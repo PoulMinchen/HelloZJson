@@ -15,6 +15,8 @@ import java.nio.file.Paths;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.RegularExpression;
+
 import static org.junit.Assert.*;
 
 public class ZJsonTest {
@@ -127,37 +129,26 @@ public class ZJsonTest {
 	 * System.out.println("How many strings have not been passed : " + errorString);
 	 * assertTrue(errorString==0); }
 	 */
-	/*
-	 * @Test public void parseWrongJSONReaderFromFiles() throws IOException {
-	 * IOException ex = null; System.out.println("Wrong JSONS test starts next!");
-	 * BufferedReader reader = new BufferedReader(new FileReader
-	 * ("/home/yadzuka/workspace/ConcepTISProjects/HelloZJson/Resources/WrongJSONS/SignatureForWrongJSONS"
-	 * )); String buffer; StringBuffer builder = new StringBuffer(); while((buffer =
-	 * reader.readLine())!=null) { builder.append(buffer); } reader.close(); }
-	 * 
-	 * /* There are wrong JSON format strings All of them not need to be parsed
-	 * 
-	 * @throws IOException
-	 *
-	 *
-	 * @Test public void parseJSONReaderWrong() throws IOException { StringReader
-	 * jsonReader; int endCode = 0; int stringCounter = 1; int errorString = 0; //
-	 * Wrong strings for parsing wrongJSONStrings = new String[]{
-	 * "{\"name\": \"\\u90xx\"}", "{\"name\": asdsasd }", "{\"name\": tru }",
-	 * "{[\"name\": \"a\"]}", "{\"name\": true ", "{ name : \"true\"}",
-	 * "{\"name\" true}", "{\"name\" : [\"name\":[\"gloomy\",\"ear\"]]}",
-	 * "{\"name\": [\"Hello\",{true},false,123 ]}" };
-	 * 
-	 * for(String testingString : wrongJSONStrings) { try { jsonReader = new
-	 * StringReader(testingString); endCode = zjson.parseJSONReader(jsonReader);
-	 * 
-	 * System.out.println("String number " + stringCounter + " : " + testingString);
-	 * errorString++; } catch (IOException ex) { System.out.println("String number "
-	 * + stringCounter + " : " + testingString +" "+ex.getMessage());}
-	 * stringCounter++; } System.out.println("How many strings have been passed : "
-	 * + errorString); assertTrue(errorString==0); }
-	 * 
-	 * @Test public void readJString() throws IOException { Reader jsonReader = new
+	 
+
+	  @Test public void parseJSONReaderWrong() throws IOException { StringReader
+	  jsonReader; int endCode = 0; int stringCounter = 1; int errorString = 0; //
+	  String [] wrongJSONStrings = new String[]{
+	  "{\"name\": \"\\u90xx\"}", "{\"name\": asdsasd }", "{\"name\": tru }",
+	  "{[\"name\": \"a\"]}", "{\"name\": true ", "{ name : \"true\"}",
+	  "{\"name\" true}", "{\"name\" : [\"name\":[\"gloomy\",\"ear\"]]}",
+	  "{\"name\": [\"Hello\",{true},false,123 ]}" };
+	  
+	  for(String testingString : wrongJSONStrings) { try { jsonReader = new
+	  StringReader(testingString); endCode = zjson.parseJSONReader(jsonReader);
+	  
+	  System.out.println("String number " + stringCounter + " : " + testingString);
+	  errorString++; } catch (IOException ex) { System.out.println("String number "
+	  + stringCounter + " : " + testingString +" "+ex.getMessage());}
+	  stringCounter++; } System.out.println("How many strings have been passed : "
+	  + errorString); assertTrue(errorString==0); }
+	  
+	 /* @Test public void readJString() throws IOException { Reader jsonReader = new
 	 * StringReader("hll\\\\g"); StringWriter sbw = new StringWriter(); StringBuffer
 	 * sb = sbw.getBuffer();
 	 * 
@@ -212,14 +203,15 @@ public class ZJsonTest {
 	
 	@Test
 	public void parsingRightJsons() throws IOException {
-
+		//Code for finding all executable tests
+		//If(file does not exists) -> file creates with no structure
 		String buffer;
 		StringBuilder strBuilder = new StringBuilder();
 
 		File bufferForCreateTests = new File("Resources/RightJSONS");
 		File configureFile = new File("Resources/RightJSONS/SignatureForRightJSONS");
-		BufferedReader reader = new BufferedReader(new FileReader(configureFile.getAbsolutePath()));
-
+		BufferedReader reader = 
+				new BufferedReader(new FileReader(configureFile.getAbsolutePath()));
 		try {
 			if (configureFile.exists())
 				while ((buffer = reader.readLine()) != null) {
@@ -227,34 +219,62 @@ public class ZJsonTest {
 				}
 			zjson = new ZJson(strBuilder.toString());
 			strBuilder = null;
+			buffer = null;
+			
 			ZJson forFilePaths = new ZJson(zjson.getItem(2).toString());
 
-			for (int j = 0; j < forFilePaths.size(); j++) {
-				System.out.println(forFilePaths.getItem(j));
+			for (int i = 0; i < forFilePaths.size(); i++) {
+				System.out.println(forFilePaths.getItem(i));
 
 				if (!new File(bufferForCreateTests.toString() + "/"
-						+ new ZJson(forFilePaths.getItem(j).toString()).getItem(0)).exists()) {
+						+ new ZJson(forFilePaths.getItem(i).toString()).getItem(0)).exists()) {
 					File f = new File(bufferForCreateTests.toString() + "/"
-							+ new ZJson(forFilePaths.getItem(j).toString()).getItem(0));
+							+ new ZJson(forFilePaths.getItem(i).toString()).getItem(0));
 					System.out.println(f);
 					Files.createFile(f.toPath());
 					
 					try(FileWriter fw = new FileWriter(f)){
-						fw.append("{\n \"comment\" : \"Пустой комментарий\",\n \"Result\" : \"Тест не проведен\", \n}");
+						fw.append("{\n \"comment\" : \"Пустой комментарий\",\n "
+								+ "\"Result\" : \"Тест не проведен\", \n}");
 						fw.flush();
 					}catch(Exception ex) {
 						System.out.println(ex.getMessage());
 					}
 				}	
 			}
+			//Read all executable tests from configure file
+			ZJson executableTests = new ZJson(zjson.getItem(1).toString());		
+			for(int i = 0; i < executableTests.size(); i++) {
+				String pathsToTests = bufferForCreateTests +"/" + executableTests.getItem(i);
+				File bufferForTest = new File(pathsToTests);
+				reader = new BufferedReader(new FileReader(bufferForTest));
+				strBuilder = new StringBuilder();
+				
+				while((buffer = reader.readLine()) != null) {
+					if(buffer.contains("//"));
+					else
+					strBuilder.append(buffer);
+					
+				}
+				System.out.println(strBuilder);
+				ZJson test = new ZJson(strBuilder.toString());
+				strBuilder = null;
+				
+				StringReader jsonReader; int endCode = 0; 
+				int stringCounter = 1; int errorString = 0;
+				
+				
+			}
+			
+			reader.close();
 		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-		}
+			System.out.println(ex.getMessage());}
 	}
 
 	@Test
 	public void parsingWrongJsons() throws IOException {
-		File configureFile = new File("Resources/WrongJSONS/SignatureForWrongJSONS");
+		File configureFile = 
+				new File("Resources/WrongJSONS/SignatureForWrongJSONS");
 		if (configureFile.exists())
 			System.out.println("Configure file exists");
 	}
