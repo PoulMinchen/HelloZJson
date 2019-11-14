@@ -98,46 +98,48 @@ public class ZJsonTest {
 		IOException ex = ZJson.parseException(1, 'a');
 		assertNotNull(ex);
 	}
-
+/*
 	@Test
 	public void parseJSONString() throws IOException {
 		zjson.parseJSONString("{ \"name\" : false }");
 
 		assertTrue(zjson.getItemName(0) != "exception");
-	}
+	}*/
 
 	/*
-	 * @Test public void parseJSONReaderRight() throws IOException { StringReader
-	 * jsonReader; int endCode = 0; int stringCounter = 1; int errorString = 0;
-	 * 
-	 * //Right string for parsing rightJSONStrings = new String[]{
-	 * "{\"name\": \"\\u0123\"}", "{\"name\": \"a\"}", "{\"name\": \"\"}",
-	 * "{\"name\": \"true\"}", "{\"name\": true }", "{\"name\": \"1231\" }",
-	 * "{\"name\": [\"Hello\",true,false,123 ]}",
-	 * "{\"name\" : [\"name\" : [true,false,12]  123 , true]}",
-	 * "{\"name\" : [\"name\" : [true,false,12]]}",
-	 * 
-	 * };
-	 * 
-	 * for(String testingString : rightJSONStrings) { try { jsonReader = new
-	 * StringReader(testingString); endCode = zjson.parseJSONReader(jsonReader);
-	 * 
-	 * System.out.println("String number " + stringCounter + " : " + testingString);
-	 * } catch (IOException ex) { System.out.println("String number " +
-	 * stringCounter + " : " + testingString +" "+ex.getMessage()); errorString++; }
-	 * stringCounter++; }
-	 * System.out.println("How many strings have not been passed : " + errorString);
-	 * assertTrue(errorString==0); }
-	 */
-	 
+	  @Test public void parseJSONReaderRight() throws IOException { StringReader
+	  jsonReader; int endCode = 0; int stringCounter = 1; int errorString = 0;
+	  
+	 //Right string for parsing 
+	  rightJSONStrings = new String[]{
+	 "{\"name\": \"\\u0123\"}", "{\"name\": \"a\"}", "{\"name\": \"\"}",
+	  "{\"name\": \"true\"}", "{\"name\": true }", "{\"name\": \"1231\" }",
+	  "{\"name\": [\"Hello\",true,false,123 ]}",
+	  "{\"name\" : [\"name\" : [true,false,12]  123 , true]}",
+	  "{\"name\" : [\"name\" : [true,false,12]]}",
+	  
+	  };
+	  
+	  for(String testingString : rightJSONStrings) { try { jsonReader = new
+	  StringReader(testingString); endCode = zjson.parseJSONReader(jsonReader);
+	  
+	  System.out.println("String number " + stringCounter + " : " + testingString);
+	  } catch (IOException ex) { System.out.println("String number " +
+	  stringCounter + " : " + testingString +" "+ex.getMessage()); errorString++; }
+	  stringCounter++; }
+	  System.out.println("How many strings have not been passed : " + errorString);
+	  assertTrue(errorString==0); }
 
-	  @Test public void parseJSONReaderWrong() throws IOException { StringReader
-	  jsonReader; int endCode = 0; int stringCounter = 1; int errorString = 0; //
-	  String [] wrongJSONStrings = new String[]{
-	  "{\"name\": \"\\u90xx\"}", "{\"name\": asdsasd }", "{\"name\": tru }",
-	  "{[\"name\": \"a\"]}", "{\"name\": true ", "{ name : \"true\"}",
-	  "{\"name\" true}", "{\"name\" : [\"name\":[\"gloomy\",\"ear\"]]}",
-	  "{\"name\": [\"Hello\",{true},false,123 ]}" };
+	 
+	/*@Test 
+	public void parseJSONReaderWrong() throws IOException { 
+		StringReader jsonReader; int endCode = 0; 
+		int stringCounter = 1; int errorString = 0; //
+		String [] wrongJSONStrings = new String[]{
+				"{\"name\": \"\\u90xx\"}", "{\"name\": asdsasd }", "{\"name\": tru }",
+				"{[\"name\": \"a\"]}", "{\"name\": true ", "{ name : \"true\"}",
+				"{\"name\" true}", "{\"name\" : [\"name\":[\"gloomy\",\"ear\"]]}",
+				"{\"name\": [\"Hello\",{true},false,123 ]}" };
 	  
 	  for(String testingString : wrongJSONStrings) { try { jsonReader = new
 	  StringReader(testingString); endCode = zjson.parseJSONReader(jsonReader);
@@ -162,7 +164,6 @@ public class ZJsonTest {
 		StringBuffer sb = sbw.getBuffer();
 
 		int c = ZJson.readJLiteral(jsonReader, sb);
-		System.out.println(sb.toString());
 
 		assertTrue(c == 34);
 	}
@@ -175,7 +176,7 @@ public class ZJsonTest {
 		double j = 2152.5;
 		Object d = null;
 		Object d1 = " ";
-
+		
 		Object[] testingObjects = { ZJson.literal2value("true"), ZJson.literal2value("false"),
 				ZJson.literal2value("51551425156"), ZJson.literal2value("2152.5F"), ZJson.literal2value("null"),
 				ZJson.literal2value(" ") };
@@ -205,11 +206,15 @@ public class ZJsonTest {
 	public void parsingRightJsons() throws IOException {
 		//Code for finding all executable tests
 		//If(file does not exists) -> file creates with no structure
+		System.out.println("STARTING RIGHT JSON WILES TESTING!!!\nConfigure file:");
+	
 		String buffer;
-		StringBuilder strBuilder = new StringBuilder();
-
-		File bufferForCreateTests = new File("Resources/RightJSONS");
-		File configureFile = new File("Resources/RightJSONS/SignatureForRightJSONS");
+		StringBuilder strBuilder = 
+				new StringBuilder();
+		File bufferForCreateTests = 
+				new File("Resources/RightJSONS");
+		File configureFile = 
+				new File("Resources/RightJSONS/SignatureForRightJSONS");
 		BufferedReader reader = 
 				new BufferedReader(new FileReader(configureFile.getAbsolutePath()));
 		try {
@@ -243,8 +248,11 @@ public class ZJsonTest {
 				}	
 			}
 			//Read all executable tests from configure file
-			ZJson executableTests = new ZJson(zjson.getItem(1).toString());		
+			ZJson executableTests = new ZJson(zjson.getItem(1).toString());	
+			int errorFile = 0;
+			int fileCounter = 1; 
 			for(int i = 0; i < executableTests.size(); i++) {
+				System.out.println("START FILE TESTING");
 				String pathsToTests = bufferForCreateTests +"/" + executableTests.getItem(i);
 				File bufferForTest = new File(pathsToTests);
 				reader = new BufferedReader(new FileReader(bufferForTest));
@@ -255,28 +263,106 @@ public class ZJsonTest {
 					else
 					strBuilder.append(buffer);
 				}
-				System.out.println(strBuilder);
-				ZJson test = new ZJson(strBuilder.toString());
-				strBuilder = null;
 				
+				String zjson_testing_string = strBuilder.toString();							
+				StringReader jsonReader; 
+				int endCode = 0; 
 				
-				
-				StringReader jsonReader; int endCode = 0; 
-				int stringCounter = 1; int errorString = 0;
-				
-				
-			}
+				try { jsonReader = new StringReader(zjson_testing_string); 
+				      endCode = zjson.parseJSONReader(jsonReader);
+				      System.out.println
+				      ("Right Json file number " + (executableTests.getItem(i)) + " : " + zjson_testing_string);
+				      errorFile++; } 
+				catch (IOException ex) { 
+					System.out.println("Right Json file number "
+					+ (executableTests.getItem(i)) + " : " + zjson_testing_string +" "+ex.getMessage());}
+					fileCounter++;}
 			
+			strBuilder = null;
 			reader.close();
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());}
+			System.out.println("How many files have not been passed : "
+					+ (fileCounter - 1 - errorFile) +" of " + (fileCounter - 1)); 
+			System.out.println();
+			assertTrue(errorFile==0); 	
+		} catch (Exception ex) {System.out.println(ex.getMessage());}
 	}
 
-	/*@Test
+	@Test
 	public void parsingWrongJsons() throws IOException {
+		//Code for finding all executable tests
+		//If(file does not exists) -> file creates with no structure
+		System.out.println("STARTING WRONG JSON WILES TESTING!!!\nConfigure file:");
+		
+		String buffer;
+		StringBuilder strBuilder = 
+				new StringBuilder();
+		File bufferForCreateTests = 
+				new File("Resources/WrongJSONS");
 		File configureFile = 
 				new File("Resources/WrongJSONS/SignatureForWrongJSONS");
-		if (configureFile.exists())
-			System.out.println("Configure file exists");
-	}*/
+		BufferedReader reader = 
+				new BufferedReader(new FileReader(configureFile.getAbsolutePath()));
+		try {
+			if (configureFile.exists())
+				while ((buffer = reader.readLine()) != null) {
+					strBuilder.append(buffer);
+				}
+			zjson = new ZJson(strBuilder.toString());
+			strBuilder = null;
+			buffer = null;
+			ZJson forFilePaths = new ZJson(zjson.getItem(2).toString());
+
+			for (int i = 0; i < forFilePaths.size(); i++) {
+				System.out.println(forFilePaths.getItem(i));
+				if (!new File(bufferForCreateTests.toString() + "/"
+						+ new ZJson(forFilePaths.getItem(i).toString()).getItem(0)).exists()) {
+					File f = new File(bufferForCreateTests.toString() + "/"
+							+ new ZJson(forFilePaths.getItem(i).toString()).getItem(0));
+					System.out.println(f);
+					Files.createFile(f.toPath());
+					
+					try(FileWriter fw = new FileWriter(f)){
+						fw.append("{\n \"comment\" : \"Пустой комментарий\",\n "
+								+ "\"Result\" : \"Тест не проведен\", \n}");
+						fw.flush();
+					}catch(Exception ex) {System.out.println(ex.getMessage());}
+				}	
+			}
+			//Read all executable tests from configure file
+			ZJson executableTests = new ZJson(zjson.getItem(1).toString());
+			int errorFile = 0;
+			int fileCounter = 1; 
+			for(int i = 0; i < executableTests.size(); i++) {
+				System.out.println("START FILE TESTING");
+				String pathsToTests = bufferForCreateTests +"/" + executableTests.getItem(i);
+				File bufferForTest = new File(pathsToTests);
+				reader = new BufferedReader(new FileReader(bufferForTest));
+				strBuilder = new StringBuilder();
+				
+				while((buffer = reader.readLine()) != null) {
+					if(buffer.contains("//"));
+					else
+					strBuilder.append(buffer);}
+				
+				String zjson_testing_string = strBuilder.toString();							
+				StringReader jsonReader; int endCode = 0; 
+				
+				try { jsonReader = new StringReader(zjson_testing_string); 
+				      endCode = zjson.parseJSONReader(jsonReader);
+				      System.out.println
+				      ("Wrong Json file number " + (executableTests.getItem(i)) + " : " + zjson_testing_string);
+				      errorFile++; } 
+				catch (IOException ex) { 
+					System.out.println("Wrong Json file number "
+					+ (executableTests.getItem(i)) + " : " + zjson_testing_string +" "+ex.getMessage());}
+					fileCounter++;}
+			
+			strBuilder = null;
+			reader.close();
+			System.out.println("How many files have been passed : "
+					+ errorFile + " of "+(fileCounter-1)); 
+			System.out.println();
+			assertTrue(errorFile==0);
+		} catch (Exception ex) {System.out.println(ex.getMessage());}
+	}	
 }

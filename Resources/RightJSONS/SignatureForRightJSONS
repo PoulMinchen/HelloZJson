@@ -1,10 +1,10 @@
 {
  "comment" : "Right JSON tests",
- "runonlytest" : ["R1","R2","R3"],
+ "runonlytest" : ["R1","R2","R4"],
  "tests" : [
   {
    "file" : "R1",
-   "comment" : "Тестируем фичу ... которая не должна работать",
+   "comment" : "Тестируем фичу юникода, которая не должна работать",
   },
   {
    "file" : "R2",
