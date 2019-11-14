@@ -254,11 +254,12 @@ public class ZJsonTest {
 					if(buffer.contains("//"));
 					else
 					strBuilder.append(buffer);
-					
 				}
 				System.out.println(strBuilder);
 				ZJson test = new ZJson(strBuilder.toString());
 				strBuilder = null;
+				
+				
 				
 				StringReader jsonReader; int endCode = 0; 
 				int stringCounter = 1; int errorString = 0;
@@ -271,11 +272,11 @@ public class ZJsonTest {
 			System.out.println(ex.getMessage());}
 	}
 
-	@Test
+	/*@Test
 	public void parsingWrongJsons() throws IOException {
 		File configureFile = 
 				new File("Resources/WrongJSONS/SignatureForWrongJSONS");
 		if (configureFile.exists())
 			System.out.println("Configure file exists");
-	}
+	}*/
 }
