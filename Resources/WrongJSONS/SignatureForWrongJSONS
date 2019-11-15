@@ -1,10 +1,10 @@
 {
  "comment" : "Wrong JSON tests",
- "runonlytest" : ["W1","W2","W3","W4"],
+ "runonlytest" : ["W1","W2","W3","W4","W5"],
  "tests" : [
   {
    "file" : "W1",
-   "comment" : "Тестируем перевод в юникод - '\\u90xx' - не должна работать",
+   "comment" : "Тестируем перевод в юникод - u90xx - не должна работать",
   },
   {
    "file" : "W2",
@@ -17,6 +17,10 @@
   {
    "file" : "W4",
    "comment" : "Тестируем массив - не должен работать",
+  },
+   {
+   "file" : "W5",
+   "comment" : "One more test for testing file creating system WRONG",
   },
  ]
 }
