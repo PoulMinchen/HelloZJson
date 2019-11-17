@@ -21,7 +21,7 @@ class HelloZJson {
             System.out.println("Hello ZJson!");
             ZJson zjson = new ZJson();
         } catch (Exception ex) {
-            System.out.println("File does not found");
+            ex.printStackTrace();
         } finally {
         }
     }

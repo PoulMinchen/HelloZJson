@@ -290,7 +290,8 @@ public class ZJsonTest {
 					+ (fileCounter - 1 - errorFile) +" of " + (fileCounter - 1)); 
 			System.out.println("See results in /Results/ path!");
 			System.out.println();
-			assertTrue(errorFile==0); 	
+			
+			assertTrue(errorFile==0);
 		} catch (Exception ex) {System.out.println(ex.getMessage());}
 		}
 	}
